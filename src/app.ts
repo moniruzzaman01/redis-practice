@@ -30,7 +30,7 @@ app.get("/posts", async (_req: Request, res: Response) => {
       message: "All posts fetched!",
       data,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error in /posts - ", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
@@ -62,7 +62,7 @@ app.get("/posts/:id", async (req: Request, res: Response) => {
         data,
       });
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error in /posts/:id - ", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
