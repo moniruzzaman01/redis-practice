@@ -1,18 +1,21 @@
-import express from "express";
-const app = express();
+import "dotenv/config";
+import express, { Request, Response, Application } from "express";
+const app: Application = express();
 import { createClient } from "redis";
 
-const redisClient = createClient();
+const redisClient = createClient({
+  url: process.env.URL,
+});
 redisClient
   .connect()
   .then(() => console.log("✅ Redis connected"))
   .catch((err) => console.error("❌ Redis connection failed:", err));
 
-app.get("/", (_req, res) => {
+app.get("/", (_req: Request, res: Response) => {
   res.send("Hello Dev!!!");
 });
 
-app.get("/posts", async (_req, res) => {
+app.get("/posts", async (_req: Request, res: Response) => {
   try {
     console.log("Fetching posts...");
     const chunk = await fetch("https://jsonplaceholder.typicode.com/photos");
@@ -33,7 +36,7 @@ app.get("/posts", async (_req, res) => {
   }
 });
 
-app.get("/posts/:id", async (req, res) => {
+app.get("/posts/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
